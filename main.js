@@ -10,7 +10,7 @@ const parseQuery = ({ search }) =>
 			return query;
 		}, {});
 
-const link = (to = "/", text = "home") => `<a href="${to}">${text}</a>`;
+const link = (to = "?", text = "home") => `<a href="${to}">${text}</a>`;
 
 const list = (data, item) => `
 	<ul>
