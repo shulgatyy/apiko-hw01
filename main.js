@@ -1,15 +1,5 @@
 const API = "https://jsonplaceholder.typicode.com";
 
-const parseQuery = ({ search }) =>
-	search
-		.slice(1)
-		.split("&")
-		.reduce((query, entry) => {
-			const [key, value] = entry.split("=");
-			query[key] = value;
-			return query;
-		}, {});
-
 const link = (to = "?", text = "home") => `<a href="${to}">${text}</a>`;
 
 const list = (data, item) => `
@@ -76,10 +66,10 @@ function detailPage(data) {
 router();
 
 function router() {
-	const query = parseQuery(location);
+	const query = (new URL(document.location)).searchParams;
 	let rout = [homePage, `${API}/posts`];
-	if (query.postId) rout = [detailPage, `${API}/posts/${+query.postId}`];
-	if (query.userId) rout = [userPage, `${API}/users/${+query.userId}`];
+	if (query.has("postId")) rout = [detailPage, `${API}/posts/${+query.get("postId")}`];
+	if (query.has("userId")) rout = [userPage, `${API}/users/${+query.get("userId")}`];
 	getDataAndRender(...rout);
 }
 
